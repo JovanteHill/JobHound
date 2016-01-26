@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+	
+		<!--Bootstrap-->
+		<link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+		<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script> 
+		
+		<!--Fonts-->
+		<link href='https://fonts.googleapis.com/css?family=Poiret+One|Vollkorn' rel='stylesheet' type='text/css'>
+		
+		<!--Stylesheets-->
+		<link rel="stylesheet" href="style.css">
+		<title></title>
+	
+	</head>
+	
+	<body id="background">
+	
+		<!--Facebook-->
+		<script>
+		   // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+window.top.location = "home.html";
+      // Logged into your app and Facebook.
+      testAPI();
+    } else if (response.status === 'not_authorized') {
+      // The person is logged into Facebook, but not your app.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    } else {
+      // The person is not logged into Facebook, so we're not sure if
+      // they are logged into this app or not.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into Facebook.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+  FB.init({
+    appId      : '447785592099073',
+    cookie     : true,  // enable cookies to allow the server to access 
+                        // the session
+    xfbml      : true,  // parse social plugins on this page
+    version    : 'v2.5' // use version 2.2
+  });
+
+  // Now that we've initialized the JavaScript SDK, we call 
+  // FB.getLoginStatus().  This function gets the state of the
+  // person visiting this page and can return one of three states to
+  // the callback you provide.  They can be:
+  //
+  // 1. Logged into your app ('connected')
+  // 2. Logged into Facebook, but not your app ('not_authorized')
+  // 3. Not logged into Facebook and can't tell if they are logged into
+  //    your app or not.
+  //
+  // These three cases are handled in the callback function.
+
+  FB.getLoginStatus(function(response) {
+    statusChangeCallback(response);
+  });
+
+  };
+
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+		</script>
+
+		<!--Find/Post Jobs-->
+		<div class="button-group">
+			<div class="container" id="wrap">
+				<div class="row">
+					<div class="col-xs-6 col-xs-offset-3">
+						
+							<!--Find a Job button-->
+							<div class="col-lg-6">
+								<button id="button-home" class="btn-lg btn-block hvr-fade" data-toggle="modal" data-target="#LoginForm">Find a Job</button>
+							</div><!--Ends Column-->
+							
+							<!--Post a Job button-->
+							<div class="col-lg-6">
+								<button id="button-home" class="btn-lg btn-block hvr-fade" data-toggle="modal" data-target="#LoginForm">Post a Job</button>
+							</div><!--Ends Column-->
+							
+							<!-- Modal Login -->
+							<div class="modal fade" id="LoginForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="myModalLabel">Login</h4>
+								  </div>
+								  <div class="modal-body">
+									
+									<div id="Fbutton" class="fb-login-button" data-max-rows="1" data-size="xlarge" data-show-faces="true" data-auto-logout-link="true">Login with Facebook</div>
+									
+									<form action="Login.php" method="post" accept-charset="utf-8" class="form" id="LoginForm" role="form" onsubmit="return validation()">
+										<h4>Please log in using the fields below, or Sign Up now for access.</h4>
+										
+										<div class="row">
+											<div class="col-xs-10 col-xs-offset-1">
+												<div class="row">
+													<div class="col-xs-12" id="input">
+														<input type="text" name="Username" id="Username" class="form-control input-lg" placeholder="Username or Email"/>
+													</div>
+												</div>
+							
+												<div class="row">
+													<div class="col-xs-12" id="input">
+														<input type="password" name="Password" id="Password" class="form-control input-lg" placeholder="Password"/>  
+													</div>
+												</div>
+												
+												<input name="Login" type="submit" class="btn-lg btn-info btn-block" value="Login">
+											</div>
+										</div>
+									</form>
+								  </div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-default" id="signup-trigger">Not a Member? Sign Up</button>
+									<button type="button" class="btn btn-primary" id="forgot-trigger">Forgot Password</button>
+								  </div>
+								</div><!-- /.modal-content -->
+							  </div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
+
+							<!-- Modal Sign Up -->
+							<div class="modal fade" id="SignupForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="myModalLabel">Sign Up</h4>
+								  </div>
+								  <div class="modal-body">
+									
+									<form action="Signup.php" method="post" accept-charset="utf-8" class="form" id="SignupForm" role="form" onsubmit="return validation()">
+																			
+										<div class="row">
+											<div class="col-xs-10 col-xs-offset-1">
+												<div class="row">
+													<div class="col-xs-6" id="input">
+														<input type="text" name="Email" id="Email" class="form-control input-lg" placeholder="Email Address"/>
+													</div>
+													
+													<div class="col-xs-6" id="input">
+														<input type="text" name="Username" id="Username" class="form-control input-lg" placeholder="Username"/>
+													</div>
+												</div>
+							
+												<div class="row">
+													<div class="col-xs-6" id="input">
+														<input type="password" name="Password" id="Password" class="form-control input-lg" placeholder="Password"/>  
+													</div>
+													
+													<div class="col-xs-6" id="input">
+														<input type="password" name="PasswordConfirm" id="PasswordConfrim" class="form-control input-lg" placeholder="Re-type Password"/>  
+													</div>
+												</div>
+												
+												<input id="submit" name="Submit" type="submit" class="btn-lg btn-info btn-block" value="Submit">
+											</div>
+										</div>
+									</form>
+								  </div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-primary" id="login-trigger">Already a member? Login</button>
+								  </div>
+								</div><!-- /.modal-content -->
+							  </div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
+
+							<!-- Modal Forgot Passwod -->
+							<div class="modal fade" id="ForgotForm" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							  <div class="modal-dialog">
+								<div class="modal-content">
+								  <div class="modal-header">
+									<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+									<h4 class="modal-title" id="myModalLabel">Forgot Password</h4>
+								  </div>
+								  <div class="modal-body">
+									...
+								  </div>
+								  <div class="modal-footer">
+									<button type="button" class="btn btn-default" data-dismiss="modal" id="back-LoginForm">Reutrn to Login</button>
+									<button type="button" class="btn btn-primary" id="back-SignupForm">Not a Member? Sign Up</button>
+								  </div>
+								</div><!-- /.modal-content -->
+							  </div><!-- /.modal-dialog -->
+							</div><!-- /.modal -->
+							
+							<script>
+							
+								$("#signup-trigger").click(function(){
+								  $('#LoginForm').modal('hide');
+								  $('#SignupForm').modal('show');
+								});
+
+								$("#forgot-trigger").click(function(){
+								  $('#LoginForm').modal('hide');
+								  $('#ForgotForm').modal('show');
+								});
+
+								$("#login-trigger").click(function(){
+								  $('#SignupForm').modal('hide');
+								  $('#LoginForm').modal('show');
+								});
+
+								$("#back-LoginForm").click(function(){
+								  $('#ForgotForm').modal('hide');
+								  $('#LoginForm').modal('show');
+								});
+
+								$("#back-SignupForm").click(function(){
+								  $('#ForgotForm').modal('hide');
+								  $('#SignupForm').modal('show');
+								});
+							
+							</script>
+
+					</div><!--Ends Column-->
+				</div><!--Ends Row-->
+			</div><!--Ends Container-->
+		</div><!--Ends Button Group-->
+	</body>
+
+</html>
